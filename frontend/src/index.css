@@ -1,0 +1,73 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary:      #8B1A2B;
+  --primary-dark: #6a1220;
+  --primary-light:#a82236;
+  --white:        #ffffff;
+  --off-white:    #f8f6f3;
+  --accent-blue:  #e8eef4;
+  --accent-grey:  #f0f2f5;
+  --text-dark:    #1a1a2e;
+  --text-mid:     #4a4a6a;
+  --text-light:   #888899;
+  --border:       #e0e0ec;
+  --gold:         #c9a84c;
+  --shadow-sm:    0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md:    0 4px 20px rgba(0,0,0,0.10);
+  --shadow-lg:    0 8px 40px rgba(139,26,43,0.12);
+  --radius:       8px;
+  --radius-lg:    16px;
+}
+
+/* === RESET BACKGROUND COLORS — prevent browser/dark-mode overrides === */
+html, body {
+  background-color: #f8f6f3 !important;
+  color: #1a1a2e !important;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'EB Garamond', Georgia, serif;
+  line-height: 1.2;
+  color: #1a1a2e;
+}
+
+a { text-decoration: none; color: inherit; }
+
+button { cursor: pointer; font-family: 'DM Sans', system-ui, sans-serif; }
+
+input, select, textarea {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: #1a1a2e;
+  background-color: #ffffff;
+}
+
+/* Fix select/input on dark mode browsers */
+select option {
+  background: #ffffff;
+  color: #1a1a2e;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* White card base */
+.card-base {
+  background: #ffffff;
+  border: 1px solid #e0e0ec;
+  border-radius: 16px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f8f6f3; }
+::-webkit-scrollbar-thumb { background: #8B1A2B; border-radius: 3px; }
