@@ -39,11 +39,16 @@ const HomePage = ({ setCurrentPage }) => {
   }, []);
 
   const filtered = achievements.filter(a => {
-    const matchCat = activeCategory === 'All' || a.category === activeCategory;
-    const matchLvl = activeLevel === 'All' || a.level === activeLevel;
     const matchSearch = !searchQuery ||
       a.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       a.title?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchCat =
+      activeCategory === 'All' ||
+      a.category_name?.toLowerCase() === activeCategory.toLowerCase();
+
+    const matchLvl =
+      activeLevel === 'All' ||
+      a.level?.toLowerCase() === activeLevel.toLowerCase();
     return matchCat && matchLvl && matchSearch;
   });
 

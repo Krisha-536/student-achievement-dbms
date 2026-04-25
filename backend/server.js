@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-
 require("./db");  // DB connection
 
 const routes = require("./routes");
@@ -18,6 +17,7 @@ app.get("/", (req, res) => {
 // API routes
 app.use("/api", routes);
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // start server
 app.listen(5000, () => {
     console.log("Server running on port 5000");

@@ -15,7 +15,12 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    const message = error.response?.data?.message || error.message || 'Something went wrong';
+    const message =
+      error.response?.data ||
+      error.response?.data?.message ||
+      error.message ||
+      'Something went wrong';
+
     return Promise.reject(new Error(message));
   }
 );
@@ -27,8 +32,16 @@ export const achievementsAPI = {
   // GET /api/pending  → returns all pending achievements
   getPending: () => api.get('/pending'),
 
+  getRejected: () => api.get('/rejected'),
+
   // POST /api/add  → body: { name, roll_no, title, category, level, position }
-  submit: (data) => api.post('/add', data),
+  submit: (data) => {
+    return api.post('/add', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  },
 
   // PUT /api/update/:id  → body: { status }
   updateStatus: (id, status) => api.put(`/update/${id}`, { status }),

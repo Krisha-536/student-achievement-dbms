@@ -7,11 +7,12 @@ const CATEGORIES = ['Hackathon', 'Sports', 'Cultural', 'Academic', 'Research'];
 const LEVELS = ['College', 'State', 'National', 'International'];
 const POSITIONS = ['1st', '2nd', '3rd', 'Finalist', 'Participant', 'Winner', 'Runner-up', 'Special Mention'];
 const DEPARTMENTS = ['Computer', 'IT', 'Mechanical', 'Electrical', 'Electronics', 'Civil', 'Production', 'Textile'];
-
+const YEARS = ['FY', 'SY', 'TY', 'LY'];
 const initialForm = {
   name: '',
   roll_no: '',
   department: '',
+  year: '',
   title: '',
   category: '',
   level: '',
@@ -44,6 +45,7 @@ const SubmitPage = ({ setCurrentPage }) => {
     if (!form.name.trim()) e.name = 'Name is required';
     if (!form.roll_no.trim()) e.roll_no = 'Roll number is required';
     if (!form.department) e.department = 'Department is required';
+    if (!form.year) e.year = 'Year is required';   // ✅ ADD
     if (!form.title.trim()) e.title = 'Achievement title is required';
     if (!form.category) e.category = 'Category is required';
     if (!form.level) e.level = 'Level is required';
@@ -60,6 +62,7 @@ const SubmitPage = ({ setCurrentPage }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const errs = validate();
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
@@ -67,13 +70,33 @@ const SubmitPage = ({ setCurrentPage }) => {
     }
 
     setLoading(true);
+
     try {
-      // Sends { name, roll_no, department, title, category, level, position }
-      await achievementsAPI.submit(form);
+      const formData = new FormData();
+
+      formData.append("name", form.name);
+      formData.append("roll_no", form.roll_no);
+      formData.append("department", form.department);   // ✅ STRING
+      formData.append("year", form.year);               // ✅ STRING
+      formData.append("title", form.title);
+      formData.append("category", form.category);       // ✅ STRING
+      formData.append("level", form.level);
+      formData.append("position", form.position);
+
+
+      if (form.proof) {
+        formData.append("proof", form.proof); // must match multer
+      }
+
+      await achievementsAPI.submit(formData);
+
       setSuccess(true);
       setForm(initialForm);
+
     } catch (err) {
-      setErrors({ submit: err.message || 'Failed to submit. Is the server running on port 5000?' });
+      setErrors({
+        submit: err.message || 'Failed to submit.'
+      });
     } finally {
       setLoading(false);
     }
@@ -147,6 +170,14 @@ const SubmitPage = ({ setCurrentPage }) => {
                   </select>
                 </Field>
 
+                <Field label="Year" name="year" required error={errors.year}>
+                  <select name="year" value={form.year} onChange={handleChange} className="form-input">
+                    <option value="">Select Year</option>
+                    {YEARS.map(y => <option key={y} value={y}>{y}</option>)}
+                  </select>
+                </Field>
+
+
                 <Field label="Roll Number" name="roll_no" required hint="Your enrollment number" error={errors.roll_no}>
                   <input
                     type="text"
@@ -203,6 +234,15 @@ const SubmitPage = ({ setCurrentPage }) => {
                     <option value="">Select</option>
                     {POSITIONS.map(p => <option key={p} value={p}>{p}</option>)}
                   </select>
+                </Field>
+
+                <Field label="Upload Proof (PDF/Image)" name="proof" required>
+                  <input
+                    type="file"
+                    name="proof"
+                    onChange={(e) => setForm(prev => ({ ...prev, proof: e.target.files[0] }))}
+                    className="form-input"
+                  />
                 </Field>
               </div>
             </div>

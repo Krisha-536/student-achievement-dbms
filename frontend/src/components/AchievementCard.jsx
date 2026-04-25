@@ -5,23 +5,23 @@ import './AchievementCard.css';
 
 const categoryColors = {
   Hackathon: { bg: '#eef4ff', text: '#1a56db', icon: 'fa-code' },
-  Sports:    { bg: '#f0fdf4', text: '#16a34a', icon: 'fa-medal' },
-  Cultural:  { bg: '#fdf4ff', text: '#9333ea', icon: 'fa-music' },
-  Academic:  { bg: '#fff7ed', text: '#ea580c', icon: 'fa-book' },
-  Research:  { bg: '#f0f9ff', text: '#0284c7', icon: 'fa-flask' },
+  Sports: { bg: '#f0fdf4', text: '#16a34a', icon: 'fa-medal' },
+  Cultural: { bg: '#fdf4ff', text: '#9333ea', icon: 'fa-music' },
+  Academic: { bg: '#fff7ed', text: '#ea580c', icon: 'fa-book' },
+  Research: { bg: '#f0f9ff', text: '#0284c7', icon: 'fa-flask' },
 };
 
 const levelColors = {
-  National:      { bg: '#fff7ed', text: '#c2410c' },
+  National: { bg: '#fff7ed', text: '#c2410c' },
   International: { bg: '#fdf0f2', text: '#8B1A2B' },
-  State:         { bg: '#f0fdf4', text: '#15803d' },
-  College:       { bg: '#f1f5f9', text: '#475569' },
+  State: { bg: '#f0fdf4', text: '#15803d' },
+  College: { bg: '#f1f5f9', text: '#475569' },
 };
 
 const positionIcons = { '1st': '🥇', '2nd': '🥈', '3rd': '🥉', 'Winner': '🏆' };
 
 const AchievementCard = ({ achievement: a }) => {
-  const cat = categoryColors[a.category] || { bg: '#f1f5f9', text: '#475569', icon: 'fa-star' };
+  const cat = categoryColors[a.category_name] || { bg: '#f1f5f9', text: '#475569', icon: 'fa-star' };
   const lvl = levelColors[a.level] || levelColors.National;
   const posIcon = positionIcons[a.position] || '🏅';
 
@@ -32,7 +32,7 @@ const AchievementCard = ({ achievement: a }) => {
           <i className={`fas ${cat.icon}`} style={{ color: cat.text }}></i>
         </div>
         <div className="ach-card__badges">
-          <span className="badge" style={{ background: cat.bg, color: cat.text }}>{a.category}</span>
+          <span className="badge" style={{ background: cat.bg, color: cat.text }}>{a.category_name}</span>
           <span className="badge" style={{ background: lvl.bg, color: lvl.text }}>{a.level}</span>
         </div>
       </div>
